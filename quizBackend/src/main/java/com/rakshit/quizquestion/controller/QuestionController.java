@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rakshit.quizquestion.entity.Questions;
+import com.rakshit.quizquestion.entity.Quiz;
 import com.rakshit.quizquestion.service.QuestionService;
 
 import jakarta.persistence.PostUpdate;
@@ -28,12 +30,12 @@ public class QuestionController {
 	//Question get
 	@RequestMapping(value="/allquestions",method= RequestMethod.GET)
 	public List<String> getAllQuestions() {
-		return service.getAllQuestions();
+		return service.getAllQuizQuestions();
 	}
 	
-	@GetMapping("/questions/{category}")
-	public List<String> getAllQuestions(@PathVariable String category) {
-		return service.getAllQuestionByCategory(category);
+	@GetMapping("/quiz/questions")
+	public List<Quiz> getAllQuizQuestions(@RequestParam String category,@RequestParam int numQ) {
+		return service.getAllQuizQuestionByCategory(category,numQ);
 	}
 	
 	

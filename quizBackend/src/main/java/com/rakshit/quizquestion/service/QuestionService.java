@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.rakshit.quizquestion.entity.Questions;
+import com.rakshit.quizquestion.entity.Quiz;
 import com.rakshit.quizquestion.repository.QuestionRepos;
 
 @Service
@@ -32,7 +33,7 @@ public class QuestionService {
 		return repo.findAllByDifficulty(difficulty);
 	}
 	
-	public List<String> getAllQuestions() {
+	public List<String> getAllQuizQuestions() {
 		List<String> questions=new ArrayList<String>();
 		List<Questions> rawData=getAllQuiz();
 		for(Questions i:rawData) {
@@ -40,11 +41,11 @@ public class QuestionService {
 		}
 		return questions;
 	}
-	public List<String> getAllQuestionByCategory(String category) {
-		List<String> questions=new ArrayList<String>();
-		List<Questions> rawData=getAllQuizByCategory(category);
+	public List<Quiz> getAllQuizQuestionByCategory(String category,int numQ) {
+		List<Quiz> questions=new ArrayList<Quiz>(numQ);
+		List<Questions> rawData=repo.getQuizQuestions(category, numQ);
 		for(Questions i:rawData) {
-			questions.add(i.getQuestion());
+			questions.add(new Quiz(i.getId(),i.getQuestion(),i.getAnswer1(),i.getAnswer2(),i.getAnswer3(),i.getDifficulty(),i.getCategory()));
 		}
 		return questions;
 	}
@@ -109,7 +110,7 @@ public class QuestionService {
 				dbQues.setDescription(ques.getDescription());
 				changes.add("Description");
 			}
-			changes.add(insertQuestion(dbQues));
+			changes.add(insertQuestion(dbQues)); 
 		}
 		else {
 			changes.add("Wrong Id");
