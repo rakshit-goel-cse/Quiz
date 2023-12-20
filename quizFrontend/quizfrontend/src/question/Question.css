@@ -1,0 +1,110 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #8f8b8b;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .container {
+    background-color: #f1b6b6;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+  }
+  
+  h1 {
+    color: #333;
+  }
+  
+  h2 {
+    color: #555;
+    margin-bottom: 20px;
+  }
+  
+  h3 {
+    color: #666;
+  }
+  
+  p {
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px 0;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Highlight selected answer */
+    li.selected {
+    background-color: #59e946;
+  }
+  
+  li:hover {
+    background-color: #e6f7ff;
+  }
+  
+  button {
+    background-color: #4caf50;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+
+  /* Navigation arrows */
+.arrow {
+    font-size: 60px;
+    cursor: pointer;
+    color: #555;
+    margin: 0 10px;
+    user-select: none;
+
+    transition: color 0.3s ease;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  }
+  
+  .arrow.left {
+    left: 10px; /* Adjust the left position as needed */
+  }
+  
+  .arrow.right {
+    right: 10px; /* Adjust the right position as needed */
+  }
+  
+  .arrow:hover {
+    color: #333;
+  }
+
+  /* Disabled arrow */
+.arrow.disabled {
+    color: #ccc; /* Change the color to a muted or grayish tone */
+    cursor: not-allowed; /* Change the cursor to indicate not allowed */
+    pointer-events: none; /* Disable mouse interactions */
+  }
+  

@@ -4,6 +4,9 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.server.Http2;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rakshit.quizquestion.entity.Answer;
 import com.rakshit.quizquestion.entity.Questions;
 import com.rakshit.quizquestion.entity.Quiz;
 import com.rakshit.quizquestion.service.QuestionService;
@@ -33,9 +37,42 @@ public class QuestionController {
 		return service.getAllQuizQuestions();
 	}
 	
+	@GetMapping("/quiz/topics")
+	public ResponseEntity<List<String>> getAllCategory(){
+		try {
+			return new ResponseEntity<List<String>>(service.getAllCategory(),HttpStatus.OK);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(null,HttpStatus.SERVICE_UNAVAILABLE);
+		}
+	}
+	
 	@GetMapping("/quiz/questions")
-	public List<Quiz> getAllQuizQuestions(@RequestParam String category,@RequestParam int numQ) {
-		return service.getAllQuizQuestionByCategory(category,numQ);
+	public ResponseEntity<List<Quiz>> getAllQuizQuestions(@RequestParam String category,@RequestParam int numQ) {
+		
+		try {
+			return new ResponseEntity<>(service.getAllQuizQuestionByCategory(category,numQ) , HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(null,HttpStatus.SERVICE_UNAVAILABLE);
+		}
+	}
+	
+	@GetMapping("/quiz/rightans/{id}")
+	public ResponseEntity<Answer> getCorrectAnswer(@PathVariable int id){
+		//int id = -1;
+		/*String idString=null;
+		if(!idString.isBlank() ) {
+			id=Integer.parseInt(idString);
+		}*/
+		try {
+			return new ResponseEntity<>(service.getCorrectAnswer(id),HttpStatus.OK);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity<>(null,HttpStatus.SERVICE_UNAVAILABLE);
+		}
 	}
 	
 	

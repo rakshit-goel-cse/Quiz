@@ -2,10 +2,14 @@ package com.rakshit.quizquestion.service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.aspectj.weaver.patterns.TypePatternQuestions.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import com.rakshit.quizquestion.entity.Answer;
 import com.rakshit.quizquestion.entity.Questions;
 import com.rakshit.quizquestion.entity.Quiz;
 import com.rakshit.quizquestion.repository.QuestionRepos;
@@ -44,8 +48,15 @@ public class QuestionService {
 	public List<Quiz> getAllQuizQuestionByCategory(String category,int numQ) {
 		List<Quiz> questions=new ArrayList<Quiz>(numQ);
 		List<Questions> rawData=repo.getQuizQuestions(category, numQ);
+		List<String> ans=null;
 		for(Questions i:rawData) {
-			questions.add(new Quiz(i.getId(),i.getQuestion(),i.getAnswer1(),i.getAnswer2(),i.getAnswer3(),i.getDifficulty(),i.getCategory()));
+			ans=new ArrayList<>();
+			ans.add(i.getAnswer1());
+			ans.add(i.getAnswer2());
+			ans.add(i.getAnswer3());
+			ans.add(i.getAnswerCorrect());
+			
+			questions.add(new Quiz(i.getId(),i.getQuestion(),ans,i.getDifficulty(),i.getCategory()));
 		}
 		return questions;
 	}
@@ -116,6 +127,21 @@ public class QuestionService {
 			changes.add("Wrong Id");
 		}
 		return changes;
+	}
+	public Answer getCorrectAnswer(int id) {
+		Questions rawData=getQuizItemById(id);
+		Answer tempAns=null;
+		if(null!=rawData) {
+			tempAns=new Answer();
+			tempAns.setAnswer(rawData.getAnswerCorrect());
+			tempAns.setDescription(rawData.getDescription());
+			tempAns.setId(rawData.getId());
+		}
+		return tempAns;
+	}
+	public List<String> getAllCategory() {
+		// TODO Auto-generated method stub
+		return repo.getAllCategory();
 	}
 
 	
