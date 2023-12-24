@@ -137,6 +137,15 @@ body {
     background-color: #c0392b; /* Darker red color on hover */
   }
 
+  /*score css*/
+  .score{
+    position: fixed;
+    top: 0; /* Position at the top */
+    left: 50%; /* Center horizontally */
+     /* Adjust for the element's width */
+    background-color: #333;
+    color: #eb840fda;
+  }
 
   /* Reset button styles */
   .rsest-button {
@@ -166,15 +175,17 @@ body {
   }
 
   p.question{
-    color:rgba(226, 13, 77, 0.904);
+    color:#e20d4de7;
   }
 
   p.answer{
-    color: rgb(10, 245, 17);
+    color: #0af511;
   }
 
   p.description{
     color:rgb(30, 62, 238);
   }
+
+  
 
   

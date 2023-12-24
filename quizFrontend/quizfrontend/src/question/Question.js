@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import './Question.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Finish from './Finish';
 
 const getCorrectAnswer = async (id) =>{
      const response = await axios.get('http://localhost:8080/quiz/rightans/'+id);
@@ -13,13 +14,17 @@ function Question(props){
     const navigate=useNavigate();
     const location=useLocation();
     const questions = location.state.questions;
-    const numberOfQues=questions.length;
+    
+    const [numberOfQues] = useState(questions.length);
     const [index, setIndex] = useState(0);
     const [submittedAnswer, setsubmittedAnswer] = useState(null);
     const [answerSelected, setAnswerSelected] = useState(false);
     const [submitted, setSubmitted] = useState(false);
     const [correctAns, setCorrectAns] = useState('');
     const [description , setDescription] = useState('');
+    const [score , setScore] = useState(0);
+    const [finish, setFinish] = useState(false);
+
 
     let category='',difficulty='',question='',answers=[];
     let data=null;
@@ -54,7 +59,7 @@ function Question(props){
     // Function to handle answer selection
   const handleAnswerSelect = (index) => {
     // Set the selected answer
-    if(!answerSelected){
+    if(!submitted){
         //console.log("handle selected-",index);
         setsubmittedAnswer(index);
         setAnswerSelected(true);
@@ -68,10 +73,18 @@ function Question(props){
     setCorrectAns(result.answer);
     setDescription(result.description);
     setSubmitted(true);
+
+    //getting correct answer
+    const element = document.getElementById(submittedAnswer);
+    if(element && result.answer===element.innerText){
+      setScore(score+1);
+    }
   };
 
   //handle answer finished
-  const handleFinish = () =>{}
+  const handleFinish = () =>{
+    setFinish(true);
+  }
 
     let ansid=0;
 
@@ -81,7 +94,22 @@ function Question(props){
   // Function to check if the user is on the last question
   const isLastQuestion = index === numberOfQues- 1;
 
+
     return (
+        
+      finish ? 
+      <div>
+        {/* Exit button in the top-right corner */}
+        <button className="exit-button" onClick={()=>{
+            navigate('/');
+          }}>
+             Exit
+            </button>
+
+        <Finish score={score} maxQues={numberOfQues}/>
+      </div>
+      : 
+        
         <div>
 
           {/* Reset button in the top-right corner */}
@@ -93,6 +121,8 @@ function Question(props){
           }}>
              Reset
             </button>
+
+            <h3 className={'score'}>{score+'/'+numberOfQues}</h3>
 
             {/* Exit button in the top-right corner */}
           <button className="exit-button" onClick={()=>{
@@ -114,6 +144,7 @@ function Question(props){
             {answers.map((answer,index) => (
             <li className='answer'
                 key={data.id+''+index}
+                id={data.id+''+index}
                 // Highlight selected answer
                 style={{ backgroundColor: data.id+''+index === submittedAnswer ? 
                 (submitted ? (
@@ -133,7 +164,7 @@ function Question(props){
         <div>
           <h3>Selected Answer:</h3>
           <p className='answer'>{correctAns}</p>
-          
+
           <h3>Description:</h3>
           <p className='description'>{description}</p>
         </div>
@@ -143,6 +174,7 @@ function Question(props){
       <div className={`arrow right ${(!submitted || isLastQuestion) ? 'disabled' : ''}`} 
         onClick={isLastQuestion ? null : handleNextQuestion}>&gt;</div>
         </div>
+
     );
 }
 
