@@ -16,6 +16,6 @@ public interface QuestionRepos extends JpaRepository<Questions, Integer> {
 	@Query(value="Select * from questions q Where q.category=:category ORDER BY RAND() LIMIT :numQ",nativeQuery = true)
 	List<Questions> getQuizQuestions(String category, int numQ);
 
-	@Query(value="Select q.category from questions q",nativeQuery = true)
+	@Query(value="Select DISTINCT q.category from questions q",nativeQuery = true)
 	List<String> getAllCategory();
 }

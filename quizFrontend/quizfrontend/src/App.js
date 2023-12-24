@@ -1,6 +1,8 @@
 import React from 'react';
-import StartQuiz from '/question/StartQuiz.js';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import StartQuiz from './question/startQuiz.js';
+import MainPage from './mainPage/MainPage.js'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Question from './question/Question.js';
 
 function App() {
   console.log("indide app");
@@ -16,10 +18,11 @@ function App() {
 
   return(
     <Router>
-    <Switch>
-      
-      <Route path="/quiz" component={StartQuiz} />
-    </Switch>
+    <Routes>
+      <Route path="/" element={<MainPage/>} />
+      <Route path="quiz" element={<StartQuiz/>} />
+      <Route path="quiz/start" element={<Question/>} />
+    </Routes>
   </Router>
   )
   

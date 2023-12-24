@@ -1,6 +1,6 @@
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #8f8b8b;
+    background-color: #fcfbfb;
     margin: 0;
     padding: 0;
     display: flex;
@@ -60,8 +60,8 @@ body {
   }
   
   button {
-    background-color: #4caf50;
     border: none;
+    background-color: #4caf50;
     color: #fff;
     cursor: pointer;
     font-size: 16px;
@@ -72,6 +72,18 @@ body {
   
   button:hover {
     background-color: #45a049;
+  }
+
+  disabledButton {
+    background-color: #333;
+    color: 'white';
+    cursor: 'not-allowed';
+  }
+
+  .enabled {
+    background-color: #4caf50;
+    color: #fff;
+    cursor: pointer;
   }
   
 
@@ -107,4 +119,62 @@ body {
     cursor: not-allowed; /* Change the cursor to indicate not allowed */
     pointer-events: none; /* Disable mouse interactions */
   }
+
+  /* Exit button styles */
+  .exit-button {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #e74c3c; /* Red color for the button */
+    color: #fff; /* White text color */
+    border: none;
+    border-radius: 4px;
+  }
+  
+  .exit-button:hover {
+    background-color: #c0392b; /* Darker red color on hover */
+  }
+
+
+  /* Reset button styles */
+  .rsest-button {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #f8f55a; /* Red color for the button */
+    color: #dd3b3b; /* Darker red color on hover */
+    border: none;
+    border-radius: 4px;
+  }
+  
+  .reset-button:hover {
+    color: #ffffff;
+    background-color: #5decb5;
+  }
+
+  p {
+    max-width: 800px;
+    max-height: 150px;
+    overflow: auto; /* Use 'auto' for scrollbars only when needed */
+    /* or use 'scroll' if you want a scrollbar to always appear */
+    /*border: 1px solid #ccc;*/
+    padding: 10px;
+  }
+
+  p.question{
+    color:rgba(226, 13, 77, 0.904);
+  }
+
+  p.answer{
+    color: rgb(10, 245, 17);
+  }
+
+  p.description{
+    color:rgb(30, 62, 238);
+  }
+
   

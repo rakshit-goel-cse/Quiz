@@ -1,11 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import Question from '/Question.js';
+
 import axios from 'axios';
+import { useLocation, useNavigate } from 'react-router-dom';
+import './startQuiz.css';
 
 
-function StartQuiz(props){
+function StartQuiz(){
+  const navigate=useNavigate();
+  const location=useLocation();
     useEffect(() => {
-        getData(5,"Spring");
+
+      //console.log("PROPS-",location.state.topic);  
+      getData(location.state.maxQuestions ,location.state.topic);
        
       }, [])
     
@@ -13,7 +19,7 @@ function StartQuiz(props){
       
     
       const getData = async (numQ, Category)=> {
-          console.log("getQuestion");
+          //console.log("getQuestion");
           const url='http://localhost:8080/quiz/questions'; 
           
         const param={
@@ -26,7 +32,7 @@ function StartQuiz(props){
           })
           //const data=promise.then((response)=>response.data);
           const result=response.data;
-          console.log("RESULT-",result);
+          //console.log("RESULT-",result);
           setData(result);
           return result;
       }
@@ -38,7 +44,16 @@ function StartQuiz(props){
           <header className="App-header">
             
           </header>
-          {0<data.length?<Question data={data}/>:null}
+          {/* Exit button in the top-right corner */}
+          <button className="exit-button" onClick={()=>{
+            navigate('/quiz');
+          }}>
+             Exit
+            </button>
+          {0<data.length?navigate('/quiz/start',{ state:{
+              questions:data
+            }}
+            ):null}
         </div>
       );
 }
